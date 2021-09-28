@@ -1,0 +1,10 @@
+.idea/
+
+.git/
+Dockerfile
+.gitignore
+.dockerignore
+
+__pycache__/
+*.py[cod]
+venv/
