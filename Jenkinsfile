@@ -8,8 +8,17 @@ pipeline {
         }
         stage('Push') {
             steps {
-                withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-                    sh 'docker push tekkengod129/weather:latest'
+                withCredentials([
+                    usernamePassword(
+                        usernameVariable: 'DOCKERHUB_USERNAME',
+                        passwordVariable: 'DOCKERHUB_PASSWORD',
+                        credentialsId: 'dockerhub'
+                    )
+                ]) {
+                    sh '''
+                        docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+                        docker push tekkengod129/weather:latest
+                    '''
                 }
             }
         }
