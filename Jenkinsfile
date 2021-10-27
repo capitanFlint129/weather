@@ -22,5 +22,21 @@ pipeline {
                 }
             }
         }
+        stage ('K8S Deploy') {
+            steps {
+                script {
+                    kubernetesDeploy(
+                        configs: 'k8s-deployment.yaml',
+                        kubeconfigId: 'K8S',
+                        enableConfigSubstitution: true
+                        )
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
     }
 }
