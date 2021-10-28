@@ -22,14 +22,15 @@ pipeline {
                 }
             }
         }
-        stage ('K8S Deploy') {
+        stage('Deploy to K8s') {
             steps {
-                script {
-                    kubernetesDeploy(
-                        configs: 'app-deployment.yml',
-                        kubeconfigId: 'K8S',
-                        enableConfigSubstitution: true
-                        )
+                sshagent(['k8s-master']) {
+                    sh 'scp -r -o StrictHostKeyChecking=no deployment.yaml root@94.26.239.10:/kubernates'
+                    script {
+                        try {
+                            sh 'ssh root@94.26.239.10 kubectl apply -f /kubernates/deployment.yaml --kubeconfig=/root/.kube/config'
+                        } catch(error) { }
+                    }
                 }
             }
         }
