@@ -31,7 +31,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 80
-    protocol: TCP
+  - port: 8765
+    targetPort: 9376
   selector:
     app: weather-service
