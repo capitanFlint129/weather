@@ -12,6 +12,11 @@ weather = Blueprint('weather', __name__)
 def get_city_data_for_last_days():
     city = request.args.get('city')
     days = request.args.get('days')
+    if not city or not days:
+        return Response(
+            response='You should set "city" and "days"',
+            status=400,
+        )
     end_date = datetime.date.today()
     try:
         start_date = (end_date - datetime.timedelta(days=int(days) - 1))
