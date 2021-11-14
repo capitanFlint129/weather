@@ -38,7 +38,6 @@ def get_city_data_for_last_days():
         )
     date_fromat = '%Y-%m-%d'
     response_data = {
-        "test": "test",
         "city": city,
         "from": start_date.strftime(date_fromat),
         "to": end_date.strftime(date_fromat),
