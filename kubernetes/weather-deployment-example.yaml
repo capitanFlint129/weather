@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
       - name: weather
-        image: tekkengod129/weather:test
+        image: tekkengod129/weather:<short git commit>
         ports:
         - containerPort: 80
         envFrom:
