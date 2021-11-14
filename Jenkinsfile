@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-       COMMIT = sh (script: "git rev-parse --verify HEAD", returnStdout: true)
+       COMMIT = sh (script: "git rev-parse --short HEAD", returnStdout: true, trim: true)
     }
     stages {
         stage('Build') {
