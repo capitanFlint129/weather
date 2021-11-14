@@ -32,10 +32,8 @@ pipeline {
         }
         stage('Deploy to K8s') {
             steps {
-                sshagent(credentials: ['k8s-master']) {
-                    script {
-                        sh 'ssh root@94.26.239.10 "kubectl set image deployments/weather-deployment weather=tekkengod129/weather:${COMMIT}"'
-                    }
+                withKubeCredentials([credentialsId: 'K8S', serverUrl: '94.26.239.10:6443']) {
+                    sh 'kubectl set image deployments/weather-deployment weather=tekkengod129/weather:${COMMIT}'
                 }
             }
         }
