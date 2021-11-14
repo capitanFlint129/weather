@@ -24,6 +24,7 @@ pipeline {
                 ]) {
                     sh '''
                         docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+                        docker push tekkengod129/weather:${COMMIT}
                         docker push tekkengod129/weather:latest
                     '''
                 }
@@ -41,6 +42,7 @@ pipeline {
     }
     post {
         always {
+            sh 'docker logout'
             cleanWs()
         }
     }
