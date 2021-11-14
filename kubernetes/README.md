@@ -15,6 +15,10 @@ backend nginx_ingress_controller_service
         server node-1 <node 1 ip>:<ingress controller port> check port <ingress controller port>
         server node-2 <node 2 ip>:<ingress controller port> check port <ingress controller port>
 ```
+Также для большей отказоустойчивости следует увеличить количество подов для контроллера:
+```
+kubectl scale deployment --namespace ingress-nginx ingress-nginx-controller --replicas=2
+```
 
 ### Режим тестирования
 Для использования режима тестирования в кластере нужно установить значение переменной MOCK_WEATHER_API_FOR_TESTS=1 в weather-deployment:
