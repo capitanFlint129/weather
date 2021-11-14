@@ -32,7 +32,7 @@ pipeline {
         }
         stage('Deploy to K8s') {
             steps {
-                withKubeConfig([credentialsId: 'K8S', serverUrl: 'https://94.26.239.10:6443']) {
+                withKubeConfig([credentialsId: 'kubernetes-token', serverUrl: 'https://weather.p5.do-school.ru']) {
                     sh 'kubectl set image deployments/weather-deployment weather=tekkengod129/weather:${COMMIT}'
                 }
             }
