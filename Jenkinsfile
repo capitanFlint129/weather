@@ -3,7 +3,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build --tag tekkengod129/weather:latest .'
+                sh 'COMMIT=$(git rev-parse --verify HEAD)'
+                sh '''
+                    docker image build . \
+                      -t "tekkengod129/weather:latest" \
+                      -t "tekkengod129/weather:${COMMIT}"
+                '''
             }
         }
         stage('Push') {
@@ -25,11 +30,8 @@ pipeline {
         stage('Deploy to K8s') {
             steps {
                 sshagent(credentials: ['k8s-master']) {
-                    sh 'scp -r -o StrictHostKeyChecking=no deployment.yaml root@94.26.239.10:/root/kubernetes'
                     script {
-                        try {
-                            sh 'ssh root@94.26.239.10 "kubectl apply -f /root/kubernetes/deployment.yaml --kubeconfig=/root/.kube/config"'
-                        } catch(error) { }
+                        sh 'ssh root@94.26.239.10 "kubectl set image deployments/weather-deployment weather=tekkengod129/weather:${COMMIT}"'
                     }
                 }
             }
