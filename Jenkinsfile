@@ -1,9 +1,11 @@
 pipeline {
     agent any
+    environment {
+       COMMIT = sh (script: "git rev-parse --verify HEAD", returnStdout: true)
+    }
     stages {
         stage('Build') {
             steps {
-                sh 'COMMIT=$(git rev-parse --verify HEAD)'
                 sh '''
                     docker image build . \
                       -t "tekkengod129/weather:latest" \
