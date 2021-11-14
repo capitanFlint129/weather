@@ -15,3 +15,9 @@ backend nginx_ingress_controller_service
         server node-1 <node 1 ip>:<ingress controller port> check port <ingress controller port>
         server node-2 <node 2 ip>:<ingress controller port> check port <ingress controller port>
 ```
+
+### Режим тестирования
+Для использования режима тестирования в кластере нужно установить значение переменной MOCK_WEATHER_API_FOR_TESTS=1 в weather-deployment:
+```
+kubectl set env deployment/weather-deployment MOCK_WEATHER_API_FOR_TESTS=1
+```
