@@ -31,7 +31,7 @@ MOCKED_TEST_DATA = {
 
 def get_city_historical_statistics(city, start_date, end_date):
     url = API_URL + f'/history'
-    if os.environ['MOCK_WEATHER_API_FOR_TESTS'] == '1':
+    if os.environ.get('MOCK_WEATHER_API_FOR_TESTS', '0') == '1':
         return MOCKED_TEST_DATA
     response = requests.get(url, params={
         'startDateTime': f'{start_date.strftime(API_DATE_FORMAT)}T00:00:00',
